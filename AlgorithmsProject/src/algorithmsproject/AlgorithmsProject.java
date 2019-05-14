@@ -17,7 +17,7 @@ public class AlgorithmsProject {
     public static void main(String[] args) {
         // TODO code application logic here
         KruskalAlgo rf = new KruskalAlgo();
-        rf.panagiotis();
+        rf.parsingData();
     }
     
 }
