@@ -7,7 +7,7 @@ package algorithmsproject;
 
 /**
  *
- * @author vasilis
+ * @author 2965, Vasileios Iakovidis, iakovidva@csd.auth.gr
  */
 
 import java.io.File;
@@ -18,37 +18,38 @@ public class ReadFile {
     
     Scanner scan;
     
-    private HashMap<Integer, ArrayList<Float>> map = new HashMap<>();
+    private HashMap<Integer, ArrayList<Double>> map = new HashMap<>();
         
     public void openFile(){
-        try{
+          try{
             scan = new Scanner (new File("inputA.txt"));
         }
         catch(FileNotFoundException e){
             System.out.println("Could not find file");
         }
     }
-    
+    // Εδώ δημιουργείται ο χάρτης μυρμηγκιών. Σκανάρετε το αρχείο εισόδου γραμμή προς γραμμή, στις γραμμές με περιττό αριθμό αντιστοιχούν τα κόκκινα
+    // μυρμήγκια, άρα χρειαζόμαστε 4 στοιχεία, Id, X, Y, Capacity ενώ στις άρτιες γραμμές τα μαύρα, όπου χρειαζόμαστε 8 στοιχεία, Id, X, Y, C1,C2,C3,C4,C5.
     public void readFile(){
         openFile();
         
         int counter = 1;
         while(scan.hasNext()){
             
-            ArrayList<Float> redant = new ArrayList<>();
+            ArrayList<Double> redant = new ArrayList<>();
             String id = scan.next();
             String x = scan.next();
             String y = scan.next();
             String capacity = scan.next();
-            redant.add(Float.parseFloat(id));
-            redant.add(Float.parseFloat(x));
-            redant.add(Float.parseFloat(y));
-            redant.add(Float.parseFloat(capacity));
+            redant.add(Double.parseDouble(id));
+            redant.add(Double.parseDouble(x));
+            redant.add(Double.parseDouble(y));
+            redant.add(Double.parseDouble(capacity));
             map.put(counter++, redant);
             
             scan.nextLine();
             
-            ArrayList<Float> blackant = new ArrayList<>();
+            ArrayList<Double> blackant = new ArrayList<>();
             String id1 = scan.next();
             String x1 = scan.next();
             String y1 = scan.next();
@@ -57,27 +58,21 @@ public class ReadFile {
             String c = scan.next();
             String d = scan.next();
             String e = scan.next();
-            blackant.add(Float.parseFloat(id1));
-            blackant.add(Float.parseFloat(x1));
-            blackant.add(Float.parseFloat(y1));
-            blackant.add(Float.parseFloat(a));
-            blackant.add(Float.parseFloat(b));
-            blackant.add(Float.parseFloat(c));
-            blackant.add(Float.parseFloat(d));
-            blackant.add(Float.parseFloat(e));
+            blackant.add(Double.parseDouble(id1));
+            blackant.add(Double.parseDouble(x1));
+            blackant.add(Double.parseDouble(y1));
+            blackant.add(Double.parseDouble(a));
+            blackant.add(Double.parseDouble(b));
+            blackant.add(Double.parseDouble(c));
+            blackant.add(Double.parseDouble(d));
+            blackant.add(Double.parseDouble(e));
             map.put(counter++, blackant);
            
-        }
-        
-/*        map.values().forEach((key) -> {
-            System.out.println(key);
-        });        
-        
-*/                
+        }               
         closeFile();
     }
     
-    public HashMap<Integer, ArrayList<Float>> getMap() {
+    public HashMap<Integer, ArrayList<Double>> getMap() {
          return map;
     }
     

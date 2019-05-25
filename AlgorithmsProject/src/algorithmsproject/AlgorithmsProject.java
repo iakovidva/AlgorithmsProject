@@ -7,7 +7,7 @@ package algorithmsproject;
 
 /**
  *
- * @author vasilis
+ * @author 2965, Vasileios Iakovidis, iakovidva@csd.auth.gr
  */
 public class AlgorithmsProject {
 
@@ -15,9 +15,14 @@ public class AlgorithmsProject {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        
+        KruskalAlgo ka = new KruskalAlgo();
+        ka.start();
         GaleShapley gs = new GaleShapley();
-        gs.parsingData();
+        gs.start();
+        PerfectCouples pc = new PerfectCouples();
+        pc.start();
+        
     }
     
 }
