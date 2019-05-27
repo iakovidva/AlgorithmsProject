@@ -16,22 +16,17 @@ import java.util.*;
  */
 public class GaleShapley {
     
-    ReadFile readfile = new ReadFile();
-    HashMap<Integer, ArrayList<Double>> antsmap;
     HashMap<Integer, LinkedList <Double>> protimiseis;
     HashMap<Integer, LinkedList <Integer>> intprotimiseis;
-        
     /*
-    Από εδώ ξεκινάει η εκτέλεση του αλγορίθμου GaleShapley. Χρησιμοποιείται ένα HashMap το οποίο αντλείται από την κλάση readfile από όπου παίρνεται όλη
+    Από εδώ ξεκινάει η εκτέλεση του αλγορίθμου GaleShapley. Χρησιμοποιείται ένα HashMap το οποίο αντλείται από το αρχείο εισόδου από όπου παίρνεται όλη
     η πληροφορία για τα μυρμήγκια. Στο HashMap protimiseis περνάνε αρχικά ως δεδομένα σε LinkedList οι αποστάσεις που έχει το κάθε μυρμήγκι με όλα τα υπόλοιπα
     με τη μορφή: μυρμήγκι1, μυρμήγκι2, απόσταση1-2, μυρμήγκι3, απόσταση 1-3. Έπειτα με τη βοήθεια της sortprotimiseis ταξινομούνται τα μυρμήγκια σύμφωνα με τις
     προτιμήσεις που έχουν στα άλλα μυρμήγκια. Μετά με την katharismos σβήνεται η περιττή πληροφορία από τις λίστες (οι αποστάσεις) καθώς χρειαζόμαστε απλά την
     προτίμηση του κάθε μυρμηγκιού και όχι και την κάθε απόσταση. Τέλος με τη συνάρτηση tairiasma βρίσκω τα ζευγάρια.
     */
-    public void start() {
+    public GaleShapley(HashMap<Integer, ArrayList<Double>> antsmap) {
 
-        readfile.readFile();
-        antsmap = readfile.getMap();
         protimiseis = new HashMap<>();
         intprotimiseis = new HashMap<>();
         
@@ -146,7 +141,6 @@ public class GaleShapley {
             String filename = "outputB.txt";
                 try (FileWriter fw = new FileWriter(filename,false)) {
                     for (int i=0;i<zeugaria.length;i++){
-                        
                         for (int j=0;j<2;j++){
                             fw.write(zeugaria[i][j]+" ");
                         }

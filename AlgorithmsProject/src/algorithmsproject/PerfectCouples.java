@@ -16,64 +16,70 @@ import java.util.*;
  */
 public class PerfectCouples {
     
-    ReadFile readfile = new ReadFile();
-    HashMap<Integer, ArrayList<Double>> antsmap;
     ArrayList <Integer> results = new ArrayList<>();
     
-    public void start(){
-        readfile.readFile();
-        antsmap = readfile.getMap();
+    public PerfectCouples(HashMap<Integer, ArrayList<Double>> antsmap){
         
         for (int i=1;i<antsmap.size();i+=2){
             
             double temp = antsmap.get(i).get(3);
-            int total = (int) temp;
+            int capacity = (int) temp;
             int [] seeds = new int [5];
             
             for (int j=0;j<5;j++){
                 double temp1 = antsmap.get(i+1).get(j+3);
                 seeds[j]=(int) temp1;
             }
-            pasok(total,seeds,i);
+            start(capacity,seeds,i);
         }
         eksodos();
     }
-    
-    private void pasok(int total, int[] seeds,int thesi){
+    /*
+    Ο πίνακας R δείχνει για κάθε θέση i ποιο στοιχείο του πίνακα seeds συμμετείχε τελευταιο για να επιτευχθεί το αντίστοιχο i.
+    Ο πίνακας Τ δείχνει για κάθε θέση i, πόσοι σπόροι από τους διαθέσιμους του πίνακα seeds χρειάζονται για να συμπληρωθεί το ποσό i. 
+    */
+    private void start(int capacity, int[] seeds,int thesi){
         int [] apotelesma = new int [5];
-            for (int i=0;i<5;i++){
-                apotelesma[i]=0;
-            }
-        int T[] = new int[total + 1];
-        int R[] = new int[total + 1];
-        T[0] = 0;
-        for(int i=1; i <= total; i++){
-            T[i] = Integer.MAX_VALUE-1;
-            R[i] = -1;
+        for (int i=0;i<5;i++){
+            apotelesma[i]=0;
+        }
+        int SeedsNum[] = new int[capacity + 1];
+        int LastSeed[] = new int[capacity + 1];
+        SeedsNum[0] = 0;
+        for(int i=1; i <= capacity; i++){
+            SeedsNum[i] = Integer.MAX_VALUE-1;
+            LastSeed[i] = -1;
         }
         for(int j=0; j < seeds.length; j++){
-            for(int i=1; i <= total; i++){
+            for(int i=1; i <= capacity; i++){
                 if(i >= seeds[j]){
-                    if (T[i - seeds[j]] + 1 < T[i]) {
-                        T[i] = 1 + T[i - seeds[j]];
-                        R[i] = j;
+                    if (SeedsNum[i - seeds[j]] + 1 < SeedsNum[i]) {
+                        SeedsNum[i] = 1 + SeedsNum[i - seeds[j]];
+                        LastSeed[i] = j;
                     }
                 }
             }
         }
-        if (R[R.length - 1] == -1) {
-            //Δεν υπάρχει πλήρης αντιστοίχηση. Συνέχεια με επόμενο ζευγάρι.
+        if (LastSeed[LastSeed.length - 1] == -1) {
+            /*
+            Δεν υπάρχει πλήρης αντιστοίχηση καθώς η τιμή του τελευταίου στοιχείου στον πίνακα R έχει παραμείνει στην αρχική τιμή που της δώσαμε.
+            Συνέχεια με επόμενο ζευγάρι.
+            */
             return;
         }
-        
-        int start = R.length - 1;
+        int start = LastSeed.length - 1;
         results.add(thesi);
         results.add(thesi+1);
+        /*
+        Όσο χωράει και άλλος σπόρος, αυξάνουμε την τιμή στον πίνακα των αποτελέσματων του j, δηλαδή του σπόρου που χρησιμοποιήσαμε
+        και μειώνουμε το βάρος που ζητάμε τόσο όσο ο σπόρος που βάλαμε τελευταίο.
+        */
         while ( start != 0 ) {
-            int j = R[start];
+            int j = LastSeed[start];
             apotelesma[j]++;
             start = start - seeds[j];
         }
+        
         for (int i=0;i<5;i++){
             results.add(apotelesma[i]);
         }

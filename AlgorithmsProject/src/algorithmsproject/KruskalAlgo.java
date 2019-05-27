@@ -14,18 +14,12 @@ import java.util.*;
  */
 public class KruskalAlgo {
 
-    ReadFile readfile = new ReadFile();
-    HashMap<Integer, ArrayList<Double>> antsmap;
-    
     /*
     Με αυτή την συνάρτηση ξεκινάει η εκτέλεση της κλάσης για τον αλγόριθμο του Kruskal. Μέσα στο HashMap antsmap υπάρχει όλη η πληροφορία για όλα τα
-    μυρμήγκια που αντλείται από την κλάση ReadFile. Η συνάρτηση start προσθέτει στο γράφο όλους τους συνδιασμούς μυρμηγκιών μαζί με την μεταξύ τους
+    μυρμήγκια που αντλείται από το αρχείο εισόδου. Ο κατασκευαστής προσθέτει στο γράφο όλους τους συνδιασμούς μυρμηγκιών μαζί με την μεταξύ τους
     απόσταση και στη συνέχεια καλεί τον αλγόριθμο Kruskal.
     */
-    public void start() {
-
-        readfile.readFile();
-        antsmap = readfile.getMap();
+    public KruskalAlgo(HashMap<Integer, ArrayList<Double>> antsmap) {
         
         Graph grafos = new Graph(antsmap.size());
         for (int i = 1; i < antsmap.size() + 1; i++) {
@@ -33,7 +27,7 @@ public class KruskalAlgo {
                 grafos.addEdge(i, j, euclDist(antsmap.get(i).get(1), antsmap.get(j).get(1), antsmap.get(i).get(2), antsmap.get(j).get(2)));
             }
         }
-        grafos.krustalMST();
+        grafos.krustalMST(antsmap);
 
     }
 
@@ -113,7 +107,7 @@ public class KruskalAlgo {
         τις μικρότερες αποστάσεις. Αν δημιουργείται κύκλος η ακμή απορρίπτεται, διαφορετικά προστίθεται στο γράφο. Στο τέλος καλούμε την
         ένωση μεταξύ των δύο σημείων και αυξάνουμε το πλήθος των ακμών που έχουν μπει.
         */
-        private void krustalMST() {
+        private void krustalMST(HashMap<Integer, ArrayList<Double>> antsmap) {
             
             sortakmes();
             int[] parent = new int[antsmap.size()+1];
